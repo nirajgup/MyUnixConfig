@@ -15,8 +15,9 @@ let g:netrw_preview=1           " open previews vertically
 let g:netrw_winsize=15		" constant netrw size
 let g:netrw_localrmdir='rm -r'
 let g:airline_powerline_fonts = 1
-let g:netrw_list_hide='.*\.pyc$,.*\.meta$'
+let g:netrw_list_hide='.*\.pyc$,.*\.meta$,__pycache__'
 let g:netrw_banner=0
+let g:netrw_sizestyle='H'
 set laststatus=2
 set mouse=a
 set cursorline

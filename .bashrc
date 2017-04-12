@@ -1,5 +1,5 @@
 export ANDROID_SDK_ROOT=/Users/nirgupta/workspace/android-sdk-macosx
-export ANDROID_NDK_ROOT=/Users/nirgupta/workspace/android-ndk-r11c
+export ANDROID_NDK_ROOT=/Users/nirgupta/workspace/android-ndk-r13b
 export ANDROID_HOME=$ANDROID_SDK_ROOT
 export ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
 export SDK_ROOT=/Users/nirgupta/workspace/android-sdk-macosx
