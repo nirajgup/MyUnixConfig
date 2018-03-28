@@ -4,14 +4,17 @@
 call plug#begin('~/.vim/plugged')
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'zchee/deoplete-clang'
+Plug 'Shougo/echodoc.vim'
+"Plug 'zchee/deoplete-clang'
+"Plug 'tweekmonster/deoplete-clang2'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 
 
 Plug 'eiginn/netrw'
@@ -36,10 +39,14 @@ call plug#end()
 
 syntax on
 filetype plugin indent on
-noremap gw <C-W><C-W>
 set ignorecase
-nmap J gT
-nmap K gt
+if has('gui_macvim')
+	nmap <D-j> gT
+	nmap <D-k> gt
+else
+	nmap J gT
+	nmap K gt
+endif
 set visualbell t_vb=
 set backspace=2
 let g:netrw_liststyle=3
@@ -60,9 +67,42 @@ set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4 smarttab
 colorscheme elflord
 let mapleader = ","
 
+nnoremap <silent> <leader>b :CommandTMRU<CR> "CommandTMRU Mapping
+nnoremap <c-]> :YcmCompleter GoTo<cr> "YcmCompleter binding
+nnoremap <silent> <leader>, :tag<cr> "Tags binding
+
+set wildignore+=*/buildOutput/*,*/build/*,*/DerivedData/*
+
 "let g:airline_theme = 'dark'
 "let g:airline#extensions#hunks#enabled=1
 "let g:airline#extensions#branch#enabled=1
 
-" Use deoplete
-let g:deoplete#enable_at_startup = 1
+let g:notes_directories = ['~/Google Drive/VimNotes']
+
+set cmdheight=2
+
+let g:echodoc#enable_at_startup = 1
+
+"let g:deoplete#enable_at_startup = 1
+set completeopt+=noinsert
+set completeopt+=noselect
+set completeopt-=preview " disable preview window at the bottom of the screen
+"inoremap <silent><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+"let:deoplete#enable_at_startup = 1
+""let g:deoplete#auto_complete_delay = 150
+""let g:deoplete#auto_refresh_delay = 1000
+""let g:deoplete#enable_camel_case = 1
+"
+"
+""let g:deoplete#sources#clang#libclang_path='/usr/local/Cellar/llvm/6.0.0/lib/libclang.dylib'
+""let g:deoplete#sources#clang#clang_header='/usr/local/Cellar/llvm/6.0.0/lib/clang'
+"let g:deoplete#sources#clang#executable='/usr/bin/clang'
+"let g:deoplete#sources#clang#autofill_neomake = 1
+"
+""" set tab complete
+"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"
+"" <C-h>, <BS>: close popup and delete backword char.
+"inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
