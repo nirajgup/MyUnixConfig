@@ -17,7 +17,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 
 
-Plug 'eiginn/netrw'
+Plug 'nirajgup/netrw'
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -28,6 +28,11 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'xolox/vim-notes'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
+"Plug 'vim-scripts/Decho'
+"Plug 'vim-scripts/Vimball'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'dracula/vim', {'as':'dracula'}
+Plug 'pseewald/vim-anyfold'
 
 Plug 'wincent/command-t', {
 \   'do': 'bash -c ''cd ruby/command-t/ext/command-t && ruby extconf.rb && make >> ~/log.txt'''
@@ -64,12 +69,20 @@ set laststatus=2
 set mouse=a
 set cursorline
 set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4 smarttab
-colorscheme elflord
+colorscheme dracula
+highlight Normal ctermbg=none
 let mapleader = ","
+let g:notes_suffix = '.txt'
+set hlsearch
+set autoread
+au FocusGained,BufEnter * :checktime
 
+nmap gc :let @* = expand("%:p")<CR>
 nnoremap <silent> <leader>b :CommandTMRU<CR> "CommandTMRU Mapping
-nnoremap <c-]> :YcmCompleter GoTo<cr> "YcmCompleter binding
-nnoremap <silent> <leader>, :tag<cr> "Tags binding
+nnoremap <silent> <leader>, :YcmCompleter GoTo<cr> "YcmCompleter binding
+
+"nnoremap <leader>a :e %:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>  
+nnoremap <leader>a :call headertoggle#toggle()<CR>
 
 set wildignore+=*/buildOutput/*,*/build/*,*/DerivedData/*
 
@@ -87,7 +100,7 @@ let g:echodoc#enable_at_startup = 1
 set completeopt+=noinsert
 set completeopt+=noselect
 set completeopt-=preview " disable preview window at the bottom of the screen
-"inoremap <silent><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <silent><expr><TAB>  pumvisible() ? \"\<C-n>" : \"\<TAB>"
 
 "let:deoplete#enable_at_startup = 1
 ""let g:deoplete#auto_complete_delay = 150
@@ -101,8 +114,15 @@ set completeopt-=preview " disable preview window at the bottom of the screen
 "let g:deoplete#sources#clang#autofill_neomake = 1
 "
 """ set tab complete
-"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"inoremap <expr><tab> pumvisible() ? \"\<c-n>" : \"\<tab>"
 "
 "" <C-h>, <BS>: close popup and delete backword char.
 "inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 "inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+"
+
+" hybrid Numbering
+set number relativenumber
+autocmd Filetype cpp,h,cc,java,python let b:anyfold_activate=1
+set foldlevel=0
+
