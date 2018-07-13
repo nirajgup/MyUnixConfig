@@ -76,6 +76,12 @@ let g:notes_suffix = '.txt'
 set hlsearch
 set autoread
 au FocusGained,BufEnter * :checktime
+set hidden
+set list listchars=eol:$,tab:‣\ ,trail:~,extends:>,precedes:<,space:.
+if has('gui_macvim')
+	highlight clear SpecialKey
+	highlight link SpecialKey DraculaSubtle
+endif
 
 nmap gc :let @* = expand("%:p")<CR>
 nnoremap <silent> <leader>b :CommandTMRU<CR> "CommandTMRU Mapping
@@ -123,6 +129,10 @@ set completeopt-=preview " disable preview window at the bottom of the screen
 
 " hybrid Numbering
 set number relativenumber
-autocmd Filetype cpp,h,cc,java,python let b:anyfold_activate=1
+autocmd Filetype cpp,h,cc,java,python,cs let b:anyfold_activate=1
+autocmd filetype cpp,c let g:anyfold_identify_comments=1
+autocmd filetype python,java let g:anyfold_identify_comments=2
+let g:anyfold_fold_comments=1
+let g:anyfold_comments=['comment','string','external','include']
 set foldlevel=0
 
