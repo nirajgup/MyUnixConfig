@@ -33,11 +33,26 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'dracula/vim', {'as':'dracula'}
 Plug 'pseewald/vim-anyfold'
+"Plug 'zerowidth/vim-copy-as-rtf'
+"Plug 'vim-utils/vim-man'
 
 Plug 'wincent/command-t', {
 \   'do': 'bash -c ''cd ruby/command-t/ext/command-t && ruby extconf.rb && make >> ~/log.txt'''
 \ }
 
+Plug 'jiangmiao/auto-pairs'
+Plug 'mileszs/ack.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'tomasr/molokai'
+Plug 'bkad/CamelCaseMotion'
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-vinegar'
+Plug 'gauteh/vim-cppman'
+"Plug 'gabrielelana/vim-markdown'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+"Plug 'python-mode/python-mode', {'branch':'develop'}
+Plug 'godlygeek/tabular'
 
 " Initialize plugin system
 call plug#end()
@@ -48,6 +63,7 @@ set ignorecase
 if has('gui_macvim')
 	nmap <D-j> gT
 	nmap <D-k> gt
+	set macmeta!
 else
 	nmap J gT
 	nmap K gt
@@ -59,7 +75,7 @@ set shell=/usr/local/bin/fish
 let g:netrw_altv=1              " open files on right
 let g:netrw_preview=1           " open previews vertically
 "let g:netrw_browse_split=4
-let g:netrw_winsize=15		" constant netrw size
+let g:netrw_winsize=90		" constant netrw size
 let g:netrw_localrmdir='rm -r'
 let g:airline_powerline_fonts = 1
 let g:netrw_list_hide='.*\.pyc$,.*\.meta$,__pycache__'
@@ -67,10 +83,10 @@ let g:netrw_banner=0
 let g:netrw_sizestyle='H'
 set laststatus=2
 set mouse=a
-set cursorline
-set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4 smarttab
-colorscheme dracula
-highlight Normal ctermbg=none
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+"colorscheme dracula
+"highlight Normal ctermbg=none
+colorscheme molokai
 let mapleader = ","
 let g:notes_suffix = '.txt'
 set hlsearch
@@ -78,19 +94,25 @@ set autoread
 au FocusGained,BufEnter * :checktime
 set hidden
 set list listchars=eol:$,tab:‣\ ,trail:~,extends:>,precedes:<,space:.
-if has('gui_macvim')
-	highlight clear SpecialKey
-	highlight link SpecialKey DraculaSubtle
-endif
+set undofile	" Maintain undo history between sessions"
+set undodir=~/.vim/undodir
 
 nmap gc :let @* = expand("%:p")<CR>
-nnoremap <silent> <leader>b :CommandTMRU<CR> "CommandTMRU Mapping
+nnoremap <silent> <leader>r :CommandTMRU<CR> "CommandTMRU Mapping
 nnoremap <silent> <leader>, :YcmCompleter GoTo<cr> "YcmCompleter binding
+command! -nargs=0 OpenInHtml    call openInHtml#open()
+nmap ,k :Cppman <cword><CR>
+nmap <m-j> :bp<CR>
+nmap <m-k> :bn<CR>
 
 "nnoremap <leader>a :e %:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>  
 nnoremap <leader>a :call headertoggle#toggle()<CR>
 
 set wildignore+=*/buildOutput/*,*/build/*,*/DerivedData/*
+
+if has('nvim')
+set cursorline
+endif
 
 "let g:airline_theme = 'dark'
 "let g:airline#extensions#hunks#enabled=1
@@ -129,10 +151,18 @@ set completeopt-=preview " disable preview window at the bottom of the screen
 
 " hybrid Numbering
 set number relativenumber
-autocmd Filetype cpp,h,cc,java,python,cs let b:anyfold_activate=1
-autocmd filetype cpp,c let g:anyfold_identify_comments=1
-autocmd filetype python,java let g:anyfold_identify_comments=2
+"autocmd Filetype cpp,h,cc,java,python,cs let b:anyfold_activate=1
+"autocmd filetype cpp,c let g:anyfold_identify_comments=1
+"autocmd filetype python,java let g:anyfold_identify_comments=2
 let g:anyfold_fold_comments=1
 let g:anyfold_comments=['comment','string','external','include']
-set foldlevel=0
+"set foldlevel=0
+call camelcasemotion#CreateMotionMappings('<leader>')
+nmap <F8> :TagbarToggle<CR>
+autocmd FileType * nested :call tagbar#autoopen(0)
+
+let g:airline#extensions#tabline#enabled = 1
+let g:CommandTTraverseSCM='pwd'
+
+let g:zipPlugin_ext='*.apk,*.celzip,*.crtx,*.docm,*.docx,*.dotm,*.dotx,*.ear,*.epub,*.gcsx,*.glox,*.gqsx,*.ja,*.jar,*.kmz,*.oxt,*.potm,*.potx,*.ppam,*.ppsm,*.ppsx,*.pptm,*.pptx,*.sldx,*.thmx,*.vdw,*.war,*.wsz,*.xap,*.xlam,*.xlam,*.xlsb,*.xlsm,*.xlsx,*.xltm,*.xltx,*.xpi,*.zip,*.aar'
 
