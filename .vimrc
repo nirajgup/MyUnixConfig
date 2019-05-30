@@ -63,8 +63,9 @@ if has('mac') || has('unix')
     set number
     set relativenumber
     set cursorline
-    let g:tagbar_ctags_bin="C:\\Program Files\\ctags\\ctags.exe"
     set shell=/usr/local/bin/fish
+else
+    let g:tagbar_ctags_bin="C:\\Program Files\\ctags\\ctags.exe"
 endif
 
 " Initialize plugin system
