@@ -1,7 +1,12 @@
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
+if has('win32') || has('win64')
+    call plug#begin('C:\Users\nirgupta\.vim\plugged')
+else
+    call plug#begin('~/.vim/plugged')
+endif
+
 
 if has('nvim')
   "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -18,7 +23,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 
 
 Plug 'nirajgup/netrw'
-Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'will133/vim-dirdiff'
@@ -30,7 +34,6 @@ Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 "Plug 'vim-scripts/Decho'
 "Plug 'vim-scripts/Vimball'
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'dracula/vim', {'as':'dracula'}
 Plug 'pseewald/vim-anyfold'
 "Plug 'zerowidth/vim-copy-as-rtf'
@@ -42,7 +45,6 @@ Plug 'wincent/command-t', {
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'mileszs/ack.vim'
-Plug 'airblade/vim-gitgutter'
 Plug 'tomasr/molokai'
 Plug 'bkad/CamelCaseMotion'
 Plug 'majutsushi/tagbar'
@@ -53,6 +55,17 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 "Plug 'python-mode/python-mode', {'branch':'develop'}
 Plug 'godlygeek/tabular'
+
+if has('mac') || has('unix')
+    Plug 'edkolev/tmuxline.vim'
+    Plug 'jeffkreeftmeijer/vim-numbertoggle'
+    Plug 'airblade/vim-gitgutter'
+    set number
+    set relativenumber
+    set cursorline
+    let g:tagbar_ctags_bin="C:\\Program Files\\ctags\\ctags.exe"
+    set shell=/usr/local/bin/fish
+endif
 
 " Initialize plugin system
 call plug#end()
@@ -71,7 +84,6 @@ endif
 set visualbell t_vb=
 set backspace=2
 let g:netrw_liststyle=3
-set shell=/usr/local/bin/fish
 let g:netrw_altv=1              " open files on right
 let g:netrw_preview=1           " open previews vertically
 "let g:netrw_browse_split=4
@@ -96,6 +108,10 @@ set hidden
 set list listchars=eol:$,tab:‣\ ,trail:~,extends:>,precedes:<,space:.
 set undofile	" Maintain undo history between sessions"
 set undodir=~/.vim/undodir
+if has('gui_macvim')
+	highlight clear SpecialKey
+	highlight link SpecialKey DraculaSubtle
+endif
 
 nmap gc :let @* = expand("%:p")<CR>
 nnoremap <silent> <leader>r :CommandTMRU<CR> "CommandTMRU Mapping
@@ -109,10 +125,6 @@ nmap <m-k> :bn<CR>
 nnoremap <leader>a :call headertoggle#toggle()<CR>
 
 set wildignore+=*/buildOutput/*,*/build/*,*/DerivedData/*
-
-if has('nvim')
-set cursorline
-endif
 
 "let g:airline_theme = 'dark'
 "let g:airline#extensions#hunks#enabled=1
@@ -150,7 +162,6 @@ set completeopt-=preview " disable preview window at the bottom of the screen
 "
 
 " hybrid Numbering
-set number relativenumber
 "autocmd Filetype cpp,h,cc,java,python,cs let b:anyfold_activate=1
 "autocmd filetype cpp,c let g:anyfold_identify_comments=1
 "autocmd filetype python,java let g:anyfold_identify_comments=2
@@ -165,4 +176,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:CommandTTraverseSCM='pwd'
 
 let g:zipPlugin_ext='*.apk,*.celzip,*.crtx,*.docm,*.docx,*.dotm,*.dotx,*.ear,*.epub,*.gcsx,*.glox,*.gqsx,*.ja,*.jar,*.kmz,*.oxt,*.potm,*.potx,*.ppam,*.ppsm,*.ppsx,*.pptm,*.pptx,*.sldx,*.thmx,*.vdw,*.war,*.wsz,*.xap,*.xlam,*.xlam,*.xlsb,*.xlsm,*.xlsx,*.xltm,*.xltx,*.xpi,*.zip,*.aar'
+set title
+augroup dirchange
+    autocmd!
+    autocmd DirChanged * let &titlestring=v:event['cwd']
+augroup END
 
