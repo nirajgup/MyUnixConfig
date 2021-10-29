@@ -1,2 +1,6 @@
 nmap <M-j> gT
 nmap <M-k> gt
+nmap <C-]> :action GotoImplementation<CR>
+set ignorecase
+set surround
+set multiple-cursors

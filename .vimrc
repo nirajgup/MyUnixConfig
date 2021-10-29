@@ -29,9 +29,17 @@ Plug 'will133/vim-dirdiff'
 Plug 'tpope/vim-fugitive'
 Plug 'xolox/vim-misc'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'xolox/vim-notes'
+"Plug 'xolox/vim-notes'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
+"Plug 'skywind3000/asyncrun.vim'
+"Plug 'christoomey/vim-run-interactive'
+"Plug 'joonty/vim-do'
+"Plug 'vim-scripts/Conque-Shell'
+"Plug 'vim-scripts/bash-support.vim'
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+
 "Plug 'vim-scripts/Decho'
 "Plug 'vim-scripts/Vimball'
 Plug 'dracula/vim', {'as':'dracula'}
@@ -49,20 +57,21 @@ Plug 'tomasr/molokai'
 Plug 'bkad/CamelCaseMotion'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-vinegar'
-Plug 'gauteh/vim-cppman'
+"Plug 'gauteh/vim-cppman'
 "Plug 'gabrielelana/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 "Plug 'python-mode/python-mode', {'branch':'develop'}
 Plug 'godlygeek/tabular'
+"Plug 'inkarkat/vim-mark', {'branch':'stable'}
 
 if has('mac') || has('unix')
     Plug 'edkolev/tmuxline.vim'
-    Plug 'jeffkreeftmeijer/vim-numbertoggle'
+    "Plug 'jeffkreeftmeijer/vim-numbertoggle'
     Plug 'airblade/vim-gitgutter'
     set number
-    set relativenumber
-    set cursorline
+    "set relativenumber
+    "set cursorline
     set shell=/usr/local/bin/fish
 else
     let g:tagbar_ctags_bin="C:\\Program Files\\ctags\\ctags.exe"
@@ -183,3 +192,46 @@ augroup dirchange
     autocmd DirChanged * let &titlestring=v:event['cwd']
 augroup END
 
+xnoremap <leader>c <esc>:'<,'>:w !bash<CR>
+
+xnoremap <leader>f <esc>:'<,'>:w !python -m json.tool<CR>
+
+"command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
+command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -c "import json, sys, collections; print(json.dumps(json.loads(sys.stdin.read(), object_pairs_hook=collections.OrderedDict), indent=4))"
+
+
+function s:exec_on_term(lnum1, lnum2)
+  " get terminal buffer
+  let g:terminal_buffer = get(g:, 'terminal_buffer', -1)
+  " open new terminal if it doesn't exist
+  if g:terminal_buffer == -1 || !bufexists(g:terminal_buffer)
+    terminal
+    let g:terminal_buffer = bufnr('')
+    wincmd p
+  " split a new window if terminal buffer hidden
+  elseif bufwinnr(g:terminal_buffer) == -1
+    exec 'sbuffer ' . g:terminal_buffer
+    wincmd p
+  endif
+  " join lines with "\<cr>", note the extra "\<cr>" for last line
+  " send joined lines to terminal.
+  call term_sendkeys(g:terminal_buffer,
+        \ join(getline(a:lnum1, a:lnum2), "\<cr>") . "\<cr>")
+endfunction
+
+command! -range ExecOnTerm call s:exec_on_term(<line1>, <line2>)
+nnoremap <leader>ex :ExecOnTerm<cr>
+vnoremap <leader>ex :ExecOnTerm<cr>
+
+
+let g:dbs = {
+\  'hogwarts-backend-dev': 'mysql://hogwarts:hogwarts@localhost:3306/hogwarts'
+\ }
+
+
+" Save and load folding from session to session
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END

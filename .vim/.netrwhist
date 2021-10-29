@@ -1,7 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/Users/nirgupta/workspace/beta/Nimble'
-let g:netrw_dirhist_2='/Users/nirgupta/workspace/beta/Nimble/Jenkins'
-let g:netrw_dirhist_3='/Users/nirgupta/workspace/beta/Nimble'
-let g:netrw_dirhist_4='/Users/nirgupta/workspace/beta/Nimble/Jenkins'
-let g:netrw_dirhist_5='/Users/nirgupta/workspace/Jenkins'
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/Users/nirgupta/workspace'
+let g:netrw_dirhist_2='/Users/nirgupta/workspace/data'
+let g:netrw_dirhist_3='/Users/nirgupta/workspace'
+let g:netrw_dirhist_4='/Users/nirgupta/workspace/retina-query-coordinator'
+let g:netrw_dirhist_5='/Users/nirgupta/workspace'
+let g:netrw_dirhist_6='/Users/nirgupta/workspace/recreation_gov'
+let g:netrw_dirhist_7='/Users/nirgupta/workspace/recreation_gov/src'
+let g:netrw_dirhist_8='/Users/nirgupta/workspace'
