@@ -1,6 +1,27 @@
-nmap <M-j> gT
-nmap <M-k> gt
+map <M-j> gT
+map <M-k> gt
 nmap <C-]> :action GotoImplementation<CR>
 set ignorecase
 set surround
 set multiple-cursors
+
+sethandler <C-A> vim
+sethandler <C-B> vim
+sethandler <C-D> vim
+sethandler <C-E> vim
+sethandler <C-F> vim
+sethandler <C-H> vim
+sethandler <C-I> ide
+sethandler <C-J> ide
+sethandler <A-J> vim
+sethandler <C-K> vim
+sethandler <C-L> vim
+sethandler <C-M> vim
+sethandler <C-N> vim
+sethandler <C-O> ide
+sethandler <C-P> vim
+sethandler <C-Q> vim
+sethandler <C-R> ide
+sethandler <C-S> vim
+sethandler <C-T> ide
+sethandler <C-V> vim

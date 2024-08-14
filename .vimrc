@@ -39,6 +39,7 @@ Plug 'christoomey/vim-tmux-navigator'
 "Plug 'vim-scripts/bash-support.vim'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'universal-ctags/ctags'
 
 "Plug 'vim-scripts/Decho'
 "Plug 'vim-scripts/Vimball'
@@ -197,7 +198,7 @@ xnoremap <leader>c <esc>:'<,'>:w !bash<CR>
 xnoremap <leader>f <esc>:'<,'>:w !python -m json.tool<CR>
 
 "command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
-command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -c "import json, sys, collections; print(json.dumps(json.loads(sys.stdin.read(), object_pairs_hook=collections.OrderedDict), indent=4))"
+command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python3 -c "import json, sys, collections; print(json.dumps(json.loads(sys.stdin.read(), object_pairs_hook=collections.OrderedDict), indent=4))"
 
 
 function s:exec_on_term(lnum1, lnum2)
@@ -235,3 +236,5 @@ augroup remember_folds
   autocmd BufWinLeave * mkview
   autocmd BufWinEnter * silent! loadview
 augroup END
+
+set tags=./tags;/

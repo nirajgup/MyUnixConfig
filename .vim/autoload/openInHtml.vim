@@ -5,7 +5,7 @@ function! openInHtml#open() " bang for overwrite when saving vimrc
 	endif
 
 	let s:current_colorscheme = execute(":colorscheme")
-	:colorscheme default
+	:colorscheme morning
 	:set nonumber
 	let s:generateHTML = execute(":TOhtml")
 	:wq
