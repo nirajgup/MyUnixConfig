@@ -25,3 +25,4 @@ sethandler <C-R> ide
 sethandler <C-S> vim
 sethandler <C-T> ide
 sethandler <C-V> vim
+selhandler <A-[> vim

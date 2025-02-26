@@ -28,7 +28,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'will133/vim-dirdiff'
 Plug 'tpope/vim-fugitive'
 Plug 'xolox/vim-misc'
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'
 "Plug 'xolox/vim-notes'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
@@ -109,7 +110,7 @@ set mouse=a
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 "colorscheme dracula
 "highlight Normal ctermbg=none
-colorscheme molokai
+colorscheme dracula
 let mapleader = ","
 let g:notes_suffix = '.txt'
 set hlsearch
@@ -200,6 +201,7 @@ xnoremap <leader>f <esc>:'<,'>:w !python -m json.tool<CR>
 "command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python3 -c "import json, sys, collections; print(json.dumps(json.loads(sys.stdin.read(), object_pairs_hook=collections.OrderedDict), indent=4))"
 
+command! -range -nargs=0 -bar Restlify <line1>,<line2> :s/, /$$$/g |s/\([ a-zA-Z0-9_:/().,-]\+\)/"\1"/g |:s/\$\$\$/, /g |s/=/:/g |noh
 
 function s:exec_on_term(lnum1, lnum2)
   " get terminal buffer
@@ -223,6 +225,9 @@ endfunction
 command! -range ExecOnTerm call s:exec_on_term(<line1>, <line2>)
 nnoremap <leader>ex :ExecOnTerm<cr>
 vnoremap <leader>ex :ExecOnTerm<cr>
+
+
+# restlify
 
 
 let g:dbs = {
